@@ -47,7 +47,7 @@ const RESOURCES = [
   // SOS
   { id: 12, title: "Panic Soothers", desc: "Quick tips for spikes of panic or overwhelm.", category: "SOS", minutes: 2, tags: ["anxiety"], icon: Smile, color: "amber" },
 
-  // New: media resources
+  // Media — Audio and Video (more of these)
   {
     id: 13,
     title: "Calming Piano",
@@ -72,6 +72,92 @@ const RESOURCES = [
     kind: "video",
     href: "https://www.youtube.com/watch?v=inpok4MKVLM",
   },
+  {
+    id: 16,
+    title: "Lo‑fi Beats to Focus",
+    desc: "Gentle beats to help you stay present.",
+    category: "Mindfulness",
+    minutes: 10,
+    tags: ["lofi", "focus", "music"],
+    icon: Youtube,
+    color: "violet",
+    kind: "video",
+    href: "https://www.youtube.com/watch?v=jfKfPfyJRdk",
+  },
+  {
+    id: 17,
+    title: "Rain Sounds for Relaxing",
+    desc: "Soft rain ambience for calm or sleep.",
+    category: "Sleep",
+    minutes: 10,
+    tags: ["rain", "sleep", "ambience"],
+    icon: Youtube,
+    color: "indigo",
+    kind: "video",
+    href: "https://www.youtube.com/watch?v=1ZYbU82GVz4",
+  },
+  {
+    id: 18,
+    title: "Ocean Waves",
+    desc: "Slow, steady waves to unwind.",
+    category: "Sleep",
+    minutes: 10,
+    tags: ["ocean", "sleep", "nature"],
+    icon: Youtube,
+    color: "cyan",
+    kind: "video",
+    href: "https://www.youtube.com/watch?v=9uIk_91GQYI",
+  },
+  {
+    id: 19,
+    title: "Soft Guitar",
+    desc: "Light acoustic guitar to ease the mind.",
+    category: "Mindfulness",
+    minutes: 4,
+    tags: ["music", "acoustic"],
+    icon: Music2,
+    color: "amber",
+    kind: "audio",
+    href: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
+  },
+  {
+    id: 20,
+    title: "Ambient Loops",
+    desc: "Warm pads and gentle tones.",
+    category: "Mindfulness",
+    minutes: 6,
+    tags: ["ambient", "music"],
+    icon: Music2,
+    color: "teal",
+    kind: "audio",
+    href: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3",
+  },
+  {
+    id: 21,
+    title: "Morning Piano",
+    desc: "Light piano to begin the day softly.",
+    category: "Mindfulness",
+    minutes: 3,
+    tags: ["piano", "morning", "music"],
+    icon: Music2,
+    color: "pink",
+    kind: "audio",
+    href: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3",
+  },
+  {
+    id: 22,
+    title: "Deep Sleep Tones",
+    desc: "Low, soothing tones for deep rest.",
+    category: "Sleep",
+    minutes: 8,
+    tags: ["sleep", "music"],
+    icon: Music2,
+    color: "violet",
+    kind: "audio",
+    href: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-13.mp3",
+  },
+
+  // Keep a single doc (very few docs as requested)
   {
     id: 15,
     title: "Stress Basics (PDF)",
@@ -102,6 +188,10 @@ export default function Resources() {
       return matchesCat && matchesQ;
     });
   }, [query, category]);
+
+  const featuredMedia = RESOURCES.filter(
+    (r) => r.kind === "video" || r.kind === "audio"
+  ).slice(0, 3);
 
   return (
     <div className="space-y-10">
@@ -134,7 +224,7 @@ export default function Resources() {
           <input
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search by name, tag, or topic…"
+            placeholder="Search music, videos, or topics…"
             aria-label="Search resources"
             className="w-full h-10 rounded-md border bg-background px-3 outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
           />
@@ -143,14 +233,13 @@ export default function Resources() {
         <CategoryChips items={CATEGORIES} active={category} onPick={setCategory} />
       </section>
 
-      {/* Featured row */}
+      {/* Featured row (show media first) */}
       <section className="grid md:grid-cols-3 gap-4">
-        {RESOURCES.slice(0, 3).map((r) => (
+        {featuredMedia.map((r) => (
           <ResourceCard key={`feat-${r.id}`} {...r} />
         ))}
       </section>
 
-      {/* All resources */}
       {/* All resources */}
       <section className="space-y-4">
         <div className="text-sm text-muted-foreground">

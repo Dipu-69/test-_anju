@@ -14,13 +14,27 @@ import About from "./pages/about";
 import Privacy from "./pages/privacy";
 import Terms from "./pages/terms";
 import NotFound from "./pages/not-found";
+import Login from "./pages/login";
+import Signup from "./pages/signup";
+import RequireAuth from "./components/auth/require-auth";
+import AuthLayout from "./components/layout/auth-layout";
+
 
 const router = createBrowserRouter([
+  // Main site with header/footer
   {
+    path: "/",
     element: <App />,
     children: [
-      { path: "/", element: <Home /> },
-      { path: "chat", element: <Chat /> },
+      { index: true, element: <Home /> },
+      {
+        path: "chat",
+        element: (
+          <RequireAuth>
+            <Chat />
+          </RequireAuth>
+        ),
+      },
       { path: "consultants", element: <Consultants /> },
       { path: "consultants/:id", element: <ConsultantDetail /> },
       { path: "resources", element: <Resources /> },
@@ -28,9 +42,18 @@ const router = createBrowserRouter([
       { path: "about", element: <About /> },
       { path: "privacy", element: <Privacy /> },
       { path: "terms", element: <Terms /> },
-      { path: "*", element: <NotFound /> }
-    ]
-  }
+    ],
+  },
+  // Auth pages WITHOUT header/footer
+  {
+    element: <AuthLayout />,
+    children: [
+      { path: "/login", element: <Login /> },
+      { path: "/signup", element: <Signup /> },
+    ],
+  },
+  // Global 404
+  { path: "*", element: <NotFound /> },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(

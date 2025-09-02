@@ -9,6 +9,7 @@ import EmptyState from "../components/consultants/empty-state";
 import { Sheet, SheetContent, SheetTrigger } from "../components/ui/sheet";
 import { Button } from "../components/ui/button";
 import { Filter } from "lucide-react";
+import BookIntro from "../components/consultants/book-intro";
 
 const SPECIALTIES = ["Anxiety", "Stress", "Depression", "CBT", "Mindfulness", "Relationships", "Sleep", "ADHD"];
 
@@ -133,6 +134,9 @@ export default function Consultants() {
   });
   const [visible, setVisible] = useState(6);
   const [drawerOpen, setDrawerOpen] = useState(false);
+
+  // Book Intro sheet state
+  const [bookFor, setBookFor] = useState(null);
 
   useEffect(() => {
     localStorage.setItem("sathi-favs", JSON.stringify([...favorites]));
@@ -270,6 +274,7 @@ export default function Consultants() {
                     {...c}
                     favorite={favorites.has(c.id)}
                     onToggleFavorite={() => onToggleFav(c.id)}
+                    onBook={() => setBookFor(c)}
                   />
                 ))}
               </div>
@@ -285,6 +290,17 @@ export default function Consultants() {
           )}
         </section>
       </div>
+
+      {/* Book intro sheet */}
+      <BookIntro
+        open={!!bookFor}
+        consultant={bookFor}
+        onClose={() => setBookFor(null)}
+        onBooked={(b) => {
+          // e.g., toast/confirm
+          console.log("Booked intro:", b);
+        }}
+      />
     </div>
   );
 }

@@ -9,6 +9,7 @@ import CtaBanner from "../components/home/cta-banner";
 import { Card } from "../components/ui/card";
 import { Button } from "../components/ui/button";
 import { Link } from "react-router-dom";
+import VoiceChat from "../components/home/voice-chat";
 
 export default function Home() {
     return (
@@ -23,6 +24,7 @@ export default function Home() {
 
             {/* New engaging, colorful sections */}
             <MoodStrip />
+            <VoiceChat />
             <ToolsMarquee />
             <HowItWorks />
 

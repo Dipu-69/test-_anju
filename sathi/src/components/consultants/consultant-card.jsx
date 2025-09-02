@@ -26,6 +26,7 @@ export default function ConsultantCard({
   available,
   favorite,
   onToggleFavorite,
+  onBook, // pass from parent to open BookIntro
 }) {
   const priceINR = typeof price === "number" ? price.toLocaleString("en-IN") : "-";
   const displayMode =
@@ -50,7 +51,6 @@ export default function ConsultantCard({
 
           <div className="min-w-0 flex-1">
             <div className="min-w-0">
-              {/* Allow wrapping so full name is visible */}
               <h3 className="font-semibold leading-tight break-words" title={name}>
                 {name}
               </h3>
@@ -76,8 +76,7 @@ export default function ConsultantCard({
             aria-label={favorite ? "Remove from saved" : "Save to favorites"}
             aria-pressed={!!favorite}
             onClick={onToggleFavorite}
-            className={`rounded-full border p-1.5 transition hover:bg-muted ${favorite ? "bg-primary/10 border-primary/30" : ""
-              }`}
+            className={`rounded-full border p-1.5 transition hover:bg-muted ${favorite ? "bg-primary/10 border-primary/30" : ""}`}
           >
             <Heart className={`h-4 w-4 ${favorite ? "text-primary fill-primary/70" : "text-foreground"}`} />
           </button>
@@ -114,12 +113,11 @@ export default function ConsultantCard({
             )}
           </div>
 
-          {/* Buttons wrap on small widths */}
           <div className="flex gap-2 w-full sm:w-auto shrink-0">
             <Button asChild variant="secondary" className="flex-1 sm:flex-none">
               <Link to={`/consultants/${id}`}>View Profile</Link>
             </Button>
-            <Button variant="default" className="flex-1 sm:flex-none">
+            <Button variant="default" className="flex-1 sm:flex-none" onClick={onBook}>
               Book intro
             </Button>
           </div>
